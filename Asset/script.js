@@ -49,4 +49,4 @@ let weather = {
       }
     });
   
-  weather.fetchWeather("california");
+  weather.fetchWeather("Norwalk");
