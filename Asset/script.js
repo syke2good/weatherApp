@@ -21,21 +21,59 @@ const api = {
   
   function displayResults (weather) {
 	let city = document.querySelector('.location .city');
+	console.log(weather);
 	city.innerText = `${weather.name}, ${weather.sys.country}`;
   
 	let now = new Date();
-	let date = document.querySelector('.location .date');
+	let date = document.querySelector('.date');
 	date.innerText = dateBuilder(now);
   
-	let temp = document.querySelector('.current .temp');
+	let temp = document.querySelector(".temp");
 	temp.innerHTML = `${Math.round(weather.main.temp)}<span>°c</span>`;
   
-	let weather_el = document.querySelector('.current .weather');
-	weather_el.innerText = weather.weather[0].main;
+	// let weather_el = document.querySelector('.current .weather');
+	// weather_el.innerText = weather.weather[0].main;
   
-	let hilow = document.querySelector('.hi-low');
-	hilow.innerText = `${Math.round(weather.main.temp_min)}°c / ${Math.round(weather.main.temp_max)}°c`;
+	let hilow = document.querySelector('.temp');
+	hilow.innerText = `${Math.round(weather.main.temp_max)}°c`;
+
+	let humidity = document.querySelector('#humidity');
+	humidity.innerHTML = `Humidity: ${weather.main.humidity}%`;
+
+	let windspeed = document.querySelector('#wind-speed');
+	windspeed.innerHTML = `Wind Speed: ${weather.wind.speed}km/h`;
+
+	let url = `https://api.openweathermap.org/data/2.5/onecall?lat=${weather.coord.lat}&lon=${weather.coord.lon}&units=metric&appid=${api.key}`;
+	
+	fetch(url)
+	  .then(weather => {
+		return weather.json();
+	  }).then(data => {
+		let uvi = document.querySelector('#uvindex');
+		uvi.innerHTML = `UV Index: ${data.current.uvi}`;
+		console.log(data);
+		let forecast = document.querySelector('.forecast');
+		for(let i=0; i < 5; i++) {
+			let day = document.createElement('div');
+			let temp = document.createElement('div');
+			temp.innerHTML = `Temp: ${data.daily[i].temp.day}C`;
+			day.appendChild(temp)
+			let humidity = document.createElement('div');
+			humidity.innerHTML = `Humidity: ${data.daily[i].humidity}%`;
+			let windspeed = document.createElement('div');
+
+
+
+
+
+			forecast.appendChild(day);
+		}
+
+
+
+	  }) ;
   }
+
   
   function dateBuilder (d) {
 	let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
