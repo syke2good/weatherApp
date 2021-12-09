@@ -8,6 +8,7 @@ const api = {
   
   function setQuery(evt) {
 	if (evt.keyCode == 13) {
+	  saveStorage(searchbox.value);
 	  getResults(searchbox.value);
 	}
   }
@@ -19,6 +20,32 @@ const api = {
 	  }).then(displayResults);
   }
   
+  function displayStorage () {
+	let storage = JSON.parse(localStorage.getItem('city'));
+	if (!storage) {
+		storage = [];
+	}
+	for(let i = 0; i < storage.length; i++) {
+		let button = document.createElement('button');
+		button.innerHTML = storage[i];
+		let history = document.querySelector('.history');
+		history.appendChild(button);
+	} 
+  }
+  displayStorage();
+  function saveStorage (city) {
+	let storage = JSON.parse(localStorage.getItem('city'));
+	if (!storage) {
+		storage = [];
+	}
+	storage.push(city);
+	localStorage.setItem('city', JSON.stringify(storage));
+	let button = document.createElement('button');
+	button.innerHTML = city;
+	let history = document.querySelector('.history');
+	history.appendChild(button);
+  }
+
   function displayResults (weather) {
 	let city = document.querySelector('.location .city');
 	console.log(weather);
