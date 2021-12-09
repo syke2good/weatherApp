@@ -55,12 +55,22 @@ const api = {
 		let forecast = document.querySelector('.forecast');
 		for(let i=0; i < 5; i++) {
 			let day = document.createElement('div');
+			let date = document.createElement('div');
+			date.innerHTML = `(${new Date(data.daily[i].dt*1000).toLocaleDateString()})`
+			day.appendChild(date);
+			let icon = document.createElement('img');
+			icon.setAttribute('src', `https://openweathermap.org/img/wn/${data.daily[i].weather[0].icon}.png`);
+			day.appendChild(icon);
 			let temp = document.createElement('div');
 			temp.innerHTML = `Temp: ${data.daily[i].temp.day}C`;
-			day.appendChild(temp)
+			day.appendChild(temp);
 			let humidity = document.createElement('div');
 			humidity.innerHTML = `Humidity: ${data.daily[i].humidity}%`;
+			day.appendChild(humidity);
 			let windspeed = document.createElement('div');
+			windspeed.innerHTML = `Wind Speed: ${data.daily[i].wind_speed}km/h`;
+			day.appendChild(windspeed);
+
 
 
 
