@@ -34,8 +34,13 @@ const api = {
 	// let weather_el = document.querySelector('.current .weather');
 	// weather_el.innerText = weather.weather[0].main;
   
-	let hilow = document.querySelector('.temp');
-	hilow.innerText = `${Math.round(weather.main.temp_max)}°c`;
+	// let hilow = document.querySelector('.temp');
+	// hilow.innerText = `${Math.round(weather.main.temp_max)}°c`;
+	let icon = document.querySelector('.icon');
+	icon.setAttribute('src', `https://openweathermap.org/img/wn/${weather.weather[0].icon}.png`);
+
+	let description = document.querySelector('.description');
+	description.innerHTML = `${weather.weather[0].description}`; 
 
 	let humidity = document.querySelector('#humidity');
 	humidity.innerHTML = `Humidity: ${weather.main.humidity}%`;
@@ -53,8 +58,10 @@ const api = {
 		uvi.innerHTML = `UV Index: ${data.current.uvi}`;
 		console.log(data);
 		let forecast = document.querySelector('.forecast');
+		forecast.innerHTML = ""
 		for(let i=0; i < 5; i++) {
 			let day = document.createElement('div');
+			day.classList.add('col-2');
 			let date = document.createElement('div');
 			date.innerHTML = `(${new Date(data.daily[i].dt*1000).toLocaleDateString()})`
 			day.appendChild(date);
